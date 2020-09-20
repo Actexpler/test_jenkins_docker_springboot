@@ -12,4 +12,4 @@ mkdir -p $PWD/logs
 chmod 777 $PWD/logs
 
 # 启动镜像  8086为工程的端口
-docker run -d --name $appname -p $port:8080 $img_output
+docker run -d --name $appname -p $port:8099 $img_output
