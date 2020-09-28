@@ -1,3 +1,5 @@
+docker stop $appname
+docker rm $appname
 cd `dirname $0`                 #进入根目录
 
 proj_home=$PWD                  #工程根目录
