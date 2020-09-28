@@ -11,4 +11,7 @@
 
         <setting name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
     </settings>
+    <typeAliases>
+        <package name="com.example.demo.pojo"/>
+    </typeAliases>
 </configuration>
