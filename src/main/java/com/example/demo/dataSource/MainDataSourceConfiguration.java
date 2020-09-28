@@ -49,7 +49,7 @@ public class MainDataSourceConfiguration {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         //bean.setConfiguration(config);  //设置properties文件中的配置
-        bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
+        bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath*:mybatis/mybatis-config.xml"));
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/mapper/*.xml"));
 //        bean.setTypeAliasesPackage("com.example.demo.pojo");
         return bean.getObject();
