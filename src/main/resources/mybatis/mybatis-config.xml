@@ -8,7 +8,6 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <!-- 自动匹配模式为全匹配 -->
         <setting name="autoMappingBehavior" value="FULL"/>
-
         <setting name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
     </settings>
     <typeAliases>

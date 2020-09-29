@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -11,7 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -50,10 +53,17 @@ public class MainDataSourceConfiguration {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         //bean.setConfiguration(config);  //设置properties文件中的配置
-        bean.setConfigLocation(new ClassPathResource("mybatis/mybatis-config.xml"));
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/mapper/*.xml"));
-//        bean.setTypeAliasesPackage("com.example.demo.pojo");
-        return bean.getObject();
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            bean.setVfs(SpringBootVFS.class);//设置SpringBootVFS, 不然读取配置文件路径不生效
+            bean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:mybatis/mybatis-config.xml"));
+            bean.setMapperLocations(resolver.getResources("classpath*:mybatis/mapper/*.xml"));
+//            bean.setTypeAliasesPackage("com.example.demo.pojo");
+            return bean.getObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Bean(name = "mainTransactionmanager")
