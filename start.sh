@@ -16,4 +16,4 @@ mkdir -p $PWD/logs
 chmod 777 $PWD/logs
 
 # 启动镜像  8086为工程的端口
-docker run -d --name=${appname} -p ${port}:8199 ${img_output} --link=mariadb:db
+docker run --name=${appname} -p ${port}:8199 --link=mariadb:db -d ${img_output}
